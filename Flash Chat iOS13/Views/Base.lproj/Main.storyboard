@@ -338,7 +338,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Q5u-eL-Bgp">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="JQ7-Lz-6qb">
+                        <barButtonItem key="rightBarButtonItem" title="back" id="JQ7-Lz-6qb">
                             <connections>
                                 <action selector="onLogoutButtonPressed:" destination="lwd-AH-u8E" id="0t5-Oo-Xl8"/>
                             </connections>
@@ -361,6 +361,8 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="dER-TX-gEJ">
                         <rect key="frame" x="0.0" y="96" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <navigationBarAppearance key="standardAppearance"/>
+                        <navigationBarAppearance key="scrollEdgeAppearance"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
