@@ -26,23 +26,32 @@ class ViewController: UIViewController {
     }
 }
 
+
+//
+ 
+
 extension ViewController
 {
     func style() {
         stackVIew.translatesAutoresizingMaskIntoConstraints = false
         newPasswordTextFied.translatesAutoresizingMaskIntoConstraints = false
+        newPasswordTextFied.delegate = self
+        
         statusView.translatesAutoresizingMaskIntoConstraints = false
         resetButton.translatesAutoresizingMaskIntoConstraints = false
         
-//        criteriaView.translatesAutoresizingMaskIntoConstraints = false
-        
+//      criteriaView.translatesAutoresizingMaskIntoConstraints = false
         stackVIew.axis = .vertical
         stackVIew.spacing = 20
         stackVIew.clipsToBounds = true
         stackVIew.layer.cornerRadius = 8
         
+
+        
         resetButton.setTitle("Reset Password", for: [])
         resetButton.configuration = .filled()
+        
+        
     }
     
     func layout() {
@@ -60,5 +69,14 @@ extension ViewController
             stackVIew.centerYAnchor.constraint(equalTo: view.centerYAnchor)
             
         ])
+    }
+}
+
+extension ViewController : PasswordTextFieldDelegate
+{
+    func editingChanged(_ sender: PasswordTextField) {
+       if sender === newPasswordTextFied {
+           statusView.updateDisplay(sender.textField.text ?? "")
+        }
     }
 }
