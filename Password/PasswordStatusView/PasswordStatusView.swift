@@ -26,7 +26,7 @@ class PasswordStatusView: UIView {
         layout()
     }
     
-    private var shouldResetCriteria: Bool =  true
+    var shouldResetCriteria: Bool =  true
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
