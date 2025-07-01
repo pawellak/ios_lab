@@ -10,9 +10,7 @@ import UIKit
 class ViewController: UIViewController {
     
     typealias CustomValidation = PasswordTextField.CustomValidation
-    
-    
-    
+
     let newPasswordTextFied = PasswordTextField(placeHolderText: "New Password")
     let statusView = PasswordStatusView()
     let confirmPasswordTextFied = PasswordTextField(placeHolderText: "Re-enter new password")
@@ -21,7 +19,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setup()
         style()
         layout()
@@ -48,8 +45,8 @@ extension ViewController
     func setup(){
         setupNewPassword()
         setupConfirmPassword()
-        setupDismissKeyboardGesture()
         setupDissmissKeyboardGesture()
+        setupKeyboardHiding()
     }
     
     private func setupNewPassword() {
@@ -98,16 +95,7 @@ extension ViewController
         confirmPasswordTextFied.customValidation = confirmPasswordValidation
         confirmPasswordTextFied.delegate = self
     }
-
-    private func setupDismissKeyboardGesture() {
-        let dismissKeyboardTap = UITapGestureRecognizer(target: self, action: #selector(viewTapped(_: )))
-        view.addGestureRecognizer(dismissKeyboardTap)
-    }
-    
-    @objc func viewTapped(_ recognizer: UITapGestureRecognizer) {
-        view.endEditing(true) // resign first responder
-    }
-    
+   
     private func setupDissmissKeyboardGesture() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGestureRecognizer)
@@ -115,6 +103,13 @@ extension ViewController
     
     @objc func dismissKeyboard(_ recognizer: UITapGestureRecognizer) {
         view.endEditing(true)
+    }
+    
+    
+    private func setupKeyboardHiding() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
     }
     
     func layout() {
@@ -134,8 +129,6 @@ extension ViewController
 
 extension ViewController : PasswordTextFieldDelegate
 {
-    
-    
     func editingChanged(_ sender: PasswordTextField) {
        if sender === newPasswordTextFied {
            statusView.updateDisplay(sender.textField.text ?? "")
@@ -149,5 +142,15 @@ extension ViewController : PasswordTextFieldDelegate
         } else if sender == confirmPasswordTextFied {
             _ = confirmPasswordTextFied.validate()
         }
+    }
+}
+
+extension ViewController {
+    @objc func keyboardWillShow(sender: NSNotification) {
+        view.frame.origin.y = view.frame.origin.y - 200
+    }
+    
+    @objc func keyboardWillHide(sender: NSNotification) {
+        view.frame.origin.y = 0
     }
 }
